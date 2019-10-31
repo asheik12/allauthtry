@@ -1,0 +1,7 @@
+{% load cus_perm %}
+<nav>
+    {% if user|get_content:'add' %}
+        <a href="{% url 'add' %}">Add Employee</a>
+    {% endif %}    
+</nav> 
+<br><br>

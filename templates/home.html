@@ -1,0 +1,56 @@
+{% load cus_perm %}
+<!-- {% load account %} -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello</title>
+</head>
+<body>
+     
+    
+
+    
+
+    <div>
+    {% if user.is_authenticated %}
+    <!-- {% user_display user %} -->
+    <h1> Welcome {{ user.username }} to django allauth home page!</h1>
+    {% include '_nav.html' %}
+
+    <div>
+        <strong>List of Employees : {{ context.count }}</strong>
+        {% for emp in context %}
+            <p>
+                {% if user|get_content:'view' %}
+                    <a href="{% url 'view' emp.pk %}">{{ emp.name }}</a> 
+                {% else %}   
+                    {{ emp.name }}
+                {% endif %}
+                {% if user|get_content:'change' %}
+                    - <a href="{% url 'change' emp.pk %}">Edit</a>
+                {% endif %}
+            </<p>
+        {% endfor %}
+    </div>
+    <div>
+    <br><br>
+    <p>Click here to <a href="{% url 'account_change_password' %}">Change Password</a></p>
+    <p>Click here to <a href="{% url 'account_email' %}">Set Email</a></p>
+    <p>Click here to <a href="{% url 'account_reset_password' %}">Reset Password</a></p>
+    <p>Click here to <a href="{% url 'account_logout' %}">Logout</a></p>
+    {% else %}
+    <h1> Welcome to django allauth home page!</h1>
+    <br><br>
+    <p>Click here to <a href="{% url 'account_signup' %}">Sign Up</a></p>
+    <p>Click here to <a href="{% url 'account_login' %}">Login</a></p>
+    {% endif %} 
+    </div>  
+    </div>
+
+    
+
+</body>
+</html>
